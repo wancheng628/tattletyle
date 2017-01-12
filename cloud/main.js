@@ -59,26 +59,17 @@ Parse.Cloud.define('pushUserName', function (request, response) {
         success: function(results) {
         alert("Successfully retrieved " + results.length + " comments.");   
           
-    var query = new Parse.Query(Parse.Installation);
-    query.exists('user');
-    Parse.Push.send({
-        where: query,
-        data: request.params.data
-    }, {
-        // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
-        useMasterKey: true,
-        success: function () {
-            response.success('Success!');
-        },
-        error: function (error) {
-            response.error('Error! ' + error.message);
-        }
-    });
+        Parse.Push.send({
+          channels: [ "Mr.T" ],
+          data: {
+             alert: "Quit Your Jibba Jabba"
+          }
+        });
           
-           },
-      error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
-      }
+    },
+    error: function(error) {
+      alert("Error: " + error.code + " " + error.message);
+    }
     });
 });
 
