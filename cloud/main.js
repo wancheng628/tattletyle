@@ -72,3 +72,23 @@ Parse.Cloud.define('pushUserName', function (request, response) {
     });
 });
 
+
+Parse.Cloud.define('pushTo', function (request, response) {
+    var query = new Parse.Query(Parse.Installation);
+    var usQuery = new Parse.Query("_User");
+    usQuery.equalTo(request.params.where, request.params.value);
+    query.matchesQuery("user", usQuery);
+    Parse.Push.send({
+        where: query,
+        data: request.params.data
+    }, {
+        // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
+        useMasterKey: true,
+        success: function () {
+            response.success('Success!');
+        },
+        error: function (error) {
+            response.error('Error! ' + error.message);
+        }
+    });
+});
