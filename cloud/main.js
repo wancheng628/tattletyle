@@ -31,7 +31,7 @@ Parse.Cloud.define('pushUserId', function (request, response) {
     // Parse.Cloud.useMasterKey();
 
     var query = new Parse.Query(Parse.Installation);
-    query.equalTo("object", {
+    query.equalTo("user", {
             __type: "Pointer",
             className: "_User",
             objectId: request.params.where
@@ -59,7 +59,7 @@ Parse.Cloud.define('pushUserName', function (request, response) {
     var query = new Parse.Query(Parse.Installation);
     
     var User = Parse.Object.extend("User");
-   query.equalTo("object", {
+   query.equalTo("user", {
             __type: "Pointer",
             className: "_User",
             username: request.params.where
