@@ -61,7 +61,7 @@ Parse.Cloud.define('pushUserName', function (request, response) {
     var User = Parse.Object.extend("User");
     // POINTER
     var auser = new User();
-    auser.id = request.params.where;
+    auser.username = request.params.where;
     //
     query.equalTo("object", auser);
     //...
