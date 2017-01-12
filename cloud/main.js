@@ -56,7 +56,7 @@ Parse.Cloud.define('pushUserName', function (request, response) {
     // THIS METHOD NO LONGER WORKS
     // Parse.Cloud.useMasterKey();
 
-    var query = new Parse.Query("_User");
+    var query = new Parse.Query(Parse.User);
     query.equalTo("username", request.params.where);
     query.find({
       success: function(results) {
