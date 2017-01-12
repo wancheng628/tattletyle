@@ -56,7 +56,11 @@ Parse.Cloud.define('pushUserName', function (request, response) {
     var query = new Parse.Query(Parse.Installation);
     query.include("_User");
     query.include("_User.username");
-    query.equalTo("_User.username", request.params.where);
+    query.equalTo("user", {
+            __type: "Pointer",
+            className: "_User",
+            username: request.params.where
+    });
     Parse.Push.send({
         where: query,
         data: request.params.data
