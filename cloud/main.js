@@ -53,6 +53,12 @@ Parse.Cloud.define('pushUserId', function (request, response) {
 
 
 Parse.Cloud.define('pushUserName', function (request, response) {
+  var query = new Parse.Query(Parse.User);
+    query.equalTo("username", request.params.where);
+    query.find({
+        success: function(results) {
+        alert("Successfully retrieved " + results.length + " comments.");   
+          
     var query = new Parse.Query(Parse.Installation);
     query.exists('user');
     Parse.Push.send({
@@ -67,6 +73,12 @@ Parse.Cloud.define('pushUserName', function (request, response) {
         error: function (error) {
             response.error('Error! ' + error.message);
         }
+    });
+          
+           },
+      error: function(error) {
+        alert("Error: " + error.code + " " + error.message);
+      }
     });
 });
 
