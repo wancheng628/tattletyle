@@ -4,12 +4,12 @@ Parse.Cloud.define('hello', function(req, res) {
 });
 
 
-Parse.Cloud.define('push', function (request, response) {
+Parse.Cloud.define('pushAll', function (request, response) {
     // THIS METHOD NO LONGER WORKS
     // Parse.Cloud.useMasterKey();
 
     var query = new Parse.Query(Parse.Installation);
-    query.equalTo(request.params.where.id, request.params.where.value);
+    query.exists('user');
     Parse.Push.send({
         where: query,
         data: request.params.data
@@ -24,3 +24,29 @@ Parse.Cloud.define('push', function (request, response) {
         }
     });
 });
+
+
+Parse.Cloud.define('pushUserName', function (request, response) {
+    // THIS METHOD NO LONGER WORKS
+    // Parse.Cloud.useMasterKey();
+
+    var query = new Parse.Query(Parse.Installation);
+    query.equalTo('user', '__type "Pointer"');
+    query.equalTo('user', 'className "_User"');
+    query.equalTo('user', 'objectId "' + request.params.where + '"');
+  
+    Parse.Push.send({
+        where: query,
+        data: request.params.data
+    }, {
+        // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
+        useMasterKey: true,
+        success: function () {
+            response.success('Success!');
+        },
+        error: function (error) {
+            response.error('Error! ' + error.message);
+        }
+    });
+});
+
