@@ -31,10 +31,11 @@ Parse.Cloud.define('pushUserId', function (request, response) {
     // Parse.Cloud.useMasterKey();
 
     var query = new Parse.Query(Parse.Installation);
-    query.equalTo('user', '__type "Pointer"');
-    query.equalTo('user', 'className "_User"');
-    query.equalTo('user', 'objectId "' + request.params.where + '"');
-  
+    query.equalTo("object", {
+            __type: "Pointer",
+            className: "User",
+            objectId: request.params.where
+        });
     Parse.Push.send({
         where: query,
         data: request.params.data
@@ -56,9 +57,14 @@ Parse.Cloud.define('pushUserName', function (request, response) {
     // Parse.Cloud.useMasterKey();
 
     var query = new Parse.Query(Parse.Installation);
-    query.equalTo('user', '__type "Pointer"');
-    query.equalTo('user', 'className "_User"');
-    query.equalTo('user', 'username "' + request.params.where + '"');
+    
+    var User = Parse.Object.extend("User");
+    // POINTER
+    var auser = new User();
+    auser.id = request.params.where;
+    //
+    query.equalTo("object", auser);
+    //...
   
     Parse.Push.send({
         where: query,
