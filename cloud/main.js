@@ -26,7 +26,7 @@ Parse.Cloud.define('pushAll', function (request, response) {
 });
 
 
-Parse.Cloud.define('pushUserName', function (request, response) {
+Parse.Cloud.define('pushUserId', function (request, response) {
     // THIS METHOD NO LONGER WORKS
     // Parse.Cloud.useMasterKey();
 
