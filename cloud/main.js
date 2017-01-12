@@ -62,15 +62,15 @@ Parse.Cloud.define('pushUserName', function (request, response) {
       success: function(results) {
         alert("Successfully retrieved " + results.length + " comments.");
         
-        var query = new Parse.Query(Parse.Installation);
-        query.equalTo("user", {
+        var query1 = new Parse.Query(Parse.Installation);
+        query1.equalTo("user", {
                   __type: "Pointer",
                   className: "_User",
                   objectId: results[0].objectId
               });
 
           Parse.Push.send({
-              where: query,
+              where: query1,
               data: request.params.data
           }, {
               // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
