@@ -9,6 +9,7 @@ Parse.Cloud.define('push', function (request, response) {
     // Parse.Cloud.useMasterKey();
 
     Parse.Push.send({
+        where: request.params.wheres,
         data: request.params.data
     }, {
         // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
