@@ -67,8 +67,6 @@ Parse.Cloud.define('pushUserName', function (request, response) {
         alert("Successfully retrieved " + results.length + " comments.");
         
         var query = new Parse.Query(Parse.Installation);
-    
-        var User = Parse.Object.extend("User");
         query.equalTo("user", {
                   __type: "Pointer",
                   className: "_User",
