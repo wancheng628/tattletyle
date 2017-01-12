@@ -8,8 +8,10 @@ Parse.Cloud.define('push', function (request, response) {
     // THIS METHOD NO LONGER WORKS
     // Parse.Cloud.useMasterKey();
 
+    var query = new Parse.Query(Parse.Installation);
+    query.equalTo(request.params.where.id, request.params.where.value);
     Parse.Push.send({
-        where: request.params.wheres,
+        where: query,
         data: request.params.data
     }, {
         // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
