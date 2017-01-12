@@ -33,7 +33,7 @@ Parse.Cloud.define('pushUserId', function (request, response) {
     var query = new Parse.Query(Parse.Installation);
     query.equalTo("object", {
             __type: "Pointer",
-            className: "User",
+            className: "_User",
             objectId: request.params.where
         });
     Parse.Push.send({
@@ -61,7 +61,7 @@ Parse.Cloud.define('pushUserName', function (request, response) {
     var User = Parse.Object.extend("User");
    query.equalTo("object", {
             __type: "Pointer",
-            className: "User",
+            className: "_User",
             username: request.params.where
         });
   
