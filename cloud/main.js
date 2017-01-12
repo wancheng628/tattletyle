@@ -55,15 +55,11 @@ Parse.Cloud.define('pushUserId', function (request, response) {
 Parse.Cloud.define('pushUserName', function (request, response) {
     // THIS METHOD NO LONGER WORKS
     // Parse.Cloud.useMasterKey();
-
-    var query = new Parse.Query(Parse.User);
-    query.equalTo("username", request.params.where);
-    query.find({
-      success: function(results) {
-        alert("Successfully retrieved " + results.length + " comments.");
-        
-       
-          Parse.Push.send({
+    var query = new Parse.Query(Parse.Installation);
+    query.exists('user');
+    Parse.Push.send({
+        where: query,
+        data: request.params.data
               data: request.params.data
           }, {
               // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
@@ -75,10 +71,5 @@ Parse.Cloud.define('pushUserName', function (request, response) {
                   response.error('Error! ' + error.message);
               }
           });
-      },
-      error: function(error) {
-        alert("Error: " + error.code + " " + error.message);
-      }
-    });
 });
 
