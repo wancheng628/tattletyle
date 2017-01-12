@@ -53,23 +53,25 @@ Parse.Cloud.define('pushUserId', function (request, response) {
 
 
 Parse.Cloud.define('pushUserName', function (request, response) {
-  var query = new Parse.Query(Parse.User);
-    query.equalTo("username", request.params.where);
-    query.find({
-        success: function(results) {
-        alert("Successfully retrieved " + results.length + " comments.");   
-          
-        Parse.Push.send({
-          channels: [ "Mr.T" ],
-          data: {
-             alert: "Quit Your Jibba Jabba"
-          }
+    var query = new Parse.Query(Parse.Installation);
+    query.include("_User");
+    query.equalTo("user", {
+            __type: "Pointer",
+            className: "_User",
+            username: request.params.where
         });
-          
-    },
-    error: function(error) {
-      alert("Error: " + error.code + " " + error.message);
-    }
+    Parse.Push.send({
+        where: query,
+        data: request.params.data
+    }, {
+        // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
+        useMasterKey: true,
+        success: function () {
+            response.success('Success!');
+        },
+        error: function (error) {
+            response.error('Error! ' + error.message);
+        }
     });
 });
 
