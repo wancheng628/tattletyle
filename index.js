@@ -32,7 +32,7 @@ var api = new ParseServer({
         production: true
       }
     },
-  verifyUserEmails: true,
+  verifyUserEmails: false,
   publicServerURL: 'https://tattletype.herokuapp.com/parse/',
   appName: 'TattleType',
   emailAdapter: {
