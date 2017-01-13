@@ -29,7 +29,7 @@ var api = new ParseServer({
         pfx: 'Certificates.p12',
         passphrase: '', // optional password to your p12/PFX
         bundleId: 'com.LavishTechnology.TattleType',
-        production: false
+        production: true
       }
     }
 });
