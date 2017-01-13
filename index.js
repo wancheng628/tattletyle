@@ -39,7 +39,7 @@ var api = new ParseServer({
     module: 'parse-server-simple-mailgun-adapter',
     options: {
       // The address that your emails come from
-      fromAddress: 'tattletype.herokuapp.com',
+      fromAddress: 'tattletype@parse.com',
       // Your domain from mailgun.com
       domain: 'mg.lavish.technology',
       // Your API key from mailgun.com
