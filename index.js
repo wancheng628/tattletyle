@@ -22,8 +22,8 @@ var api = new ParseServer({
   }, 
   push: {
       android: {
-        senderId: '590644427949',
-        apiKey: 'AIzaSyDeZ08rXk-ynVCxfJK9jHcwNE-Ad0ypZa4'
+        senderId: 'tattletype-157419',
+        apiKey: 'AIzaSyC04tbQSE4y0I7TPYcRJd5WLVj2nLU_kTQ'
       },
       ios: {
         pfx: 'DevCertificates.p12',
