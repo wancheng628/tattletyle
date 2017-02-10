@@ -26,10 +26,10 @@ var api = new ParseServer({
         apiKey: 'AIzaSyC04tbQSE4y0I7TPYcRJd5WLVj2nLU_kTQ'
       },
       ios: {
-        pfx: 'Certificates.p12',
+        pfx: 'DevCertificates.p12',
         passphrase: '', // optional password to your p12/PFX
         bundleId: 'com.LavishTechnology.TattleType',
-        production: true
+        production: false
       }
     },
   verifyUserEmails: false,
