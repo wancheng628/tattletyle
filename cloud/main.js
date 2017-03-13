@@ -97,7 +97,7 @@ Parse.Cloud.define('pushTo', function (request, response) {
 Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
   Parse.Cloud.useMasterKey();
   var query = new Parse.Query(Parse.Installation);
-  query.equalTo("owner", request.user);
+  query.equalTo("user", request.user);
   query.equalTo("uniqueID", request.object.get("uniqueID"));
   query.first().then(function(duplicate) {
       if (typeof duplicate === "undefined") {
