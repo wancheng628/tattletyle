@@ -83,7 +83,7 @@ Parse.Cloud.define('pushTo', function (request, response) {
     pushData["click_action"] = "FCM_PLUGIN_ACTIVITY"
     Parse.Push.send({
         where: query,
-        data: request.params.data
+        data: pushData
     }, {
         // ADD THE `useMasterKey` TO THE OPTIONS OBJECT
         useMasterKey: true,
