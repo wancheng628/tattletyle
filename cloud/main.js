@@ -100,6 +100,7 @@ Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
   if (androidId == null || androidId == "") {
       console.warn("No androidId found, save and exit");
       response.success();
+      return;
   }
   var query = new Parse.Query(Parse.Installation);
   query.equalTo("androidId", androidId);
