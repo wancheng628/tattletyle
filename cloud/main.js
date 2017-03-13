@@ -79,6 +79,8 @@ Parse.Cloud.define('pushTo', function (request, response) {
     var usQuery = new Parse.Query("_User");
     usQuery.equalTo(request.params.where, request.params.value);
     query.matchesQuery("user", usQuery);
+    var pushData = request.params.data
+    pushData["click_action"] = "FCM_PLUGIN_ACTIVITY"
     Parse.Push.send({
         where: query,
         data: request.params.data
