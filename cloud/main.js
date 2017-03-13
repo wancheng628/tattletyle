@@ -104,17 +104,17 @@ Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
   var query = new Parse.Query(Parse.Installation);
   query.equalTo("androidId", androidId);
   query.addAscending("createdAt");
-  query.find().then(useMasterKey: true, success: function(results) {
+  query.find().then({useMasterKey: true, success: function(results) {
       for (var i = 0; i < results.length; ++i) {
           console.warn("iterating over Installations with androidId= "+ androidId);
           if (results[i].get("installationId") != request.object.get("installationId")) {
               console.warn("Installation["+i+"] and the request have different installationId values. Try to delete. [installationId:" + results[i].get("installationId") + "]");
-              results[i].destroy().then(function() {
+              results[i].destroy().then({useMasterKey: true, success: function() {
                   console.warn("Installation["+i+"] has been deleted");
               },
-              function() {
+              error: function() {
                   console.warn("Error: Installation["+i+"] could not be deleted");
-              });
+              }});
           } else {
               console.warn("Installation["+i+"] and the request has the same installationId value. Ignore. [installationId:" + results[i].get("installationId") + "]");
           }
@@ -122,7 +122,7 @@ Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
       console.warn("Finished iterating over Installations. A new Installation will be saved now...");
       response.success();
   },
-  function(error) {
+  error: function(error) {
       response.error("Error: Can't query for Installation objects.");
-  });
+  }});
 });
