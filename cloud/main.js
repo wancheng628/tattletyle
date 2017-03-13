@@ -114,7 +114,7 @@ Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
               },
               function() {
                   console.warn("Error: Installation["+i+"] could not be deleted");
-              }});
+              });
           } else {
               console.warn("Installation["+i+"] and the request has the same installationId value. Ignore. [installationId:" + results[i].get("installationId") + "]");
           }
