@@ -104,7 +104,7 @@ Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
   var query = new Parse.Query(Parse.Installation);
   query.equalTo("androidId", androidId);
   query.addAscending("createdAt");
-  query.find().then(function(results) {
+  query.find().then(useMasterKey: true, success: function(results) {
       for (var i = 0; i < results.length; ++i) {
           console.warn("iterating over Installations with androidId= "+ androidId);
           if (results[i].get("installationId") != request.object.get("installationId")) {
