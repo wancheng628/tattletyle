@@ -96,26 +96,33 @@ Parse.Cloud.define('pushTo', function (request, response) {
 
 Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
   Parse.Cloud.useMasterKey();
-  var query = new Parse.Query(Parse.Installation);
-  query.equalTo("user", request.user);
-  query.equalTo("uniqueID", request.object.get("uniqueID"));
-  query.first().then(function(duplicate) {
-      if (typeof duplicate === "undefined") {
-          console.log("Duplicate does not exist,New installation");
-          response.success();
-      } else {
-          console.log("Duplicate exist..Trying to delete " + duplicate.id);
-          duplicate.destroy().then(function(duplicate) {
-              console.log("Successfully deleted duplicate");
-              response.success();
-          }, function() {
-              console.log(error.code + " " + error.message);
-              response.success();
-          });
-
-      }
-  }, function(error) {
-      console.warn(error.code + error.message);
+  var androidId = request.object.get("androidId");
+  if (androidId == null || androidId == "") {
+      console.warn("No androidId found, save and exit");
       response.success();
+  }
+  var query = new Parse.Query(Parse.Installation);
+  query.equalTo("androidId", androidId);
+  query.addAscending("createdAt");
+  query.find().then(function(results) {
+      for (var i = 0; i < results.length; ++i) {
+          console.warn("iterating over Installations with androidId= "+ androidId);
+          if (results[i].get("installationId") != request.object.get("installationId")) {
+              console.warn("Installation["+i+"] and the request have different installationId values. Try to delete. [installationId:" + results[i].get("installationId") + "]");
+              results[i].destroy().then(function() {
+                  console.warn("Installation["+i+"] has been deleted");
+              },
+              function() {
+                  console.warn("Error: Installation["+i+"] could not be deleted");
+              });
+          } else {
+              console.warn("Installation["+i+"] and the request has the same installationId value. Ignore. [installationId:" + results[i].get("installationId") + "]");
+          }
+      }
+      console.warn("Finished iterating over Installations. A new Installation will be saved now...");
+      response.success();
+  },
+  function(error) {
+      response.error("Error: Can't query for Installation objects.");
   });
 });
