@@ -74,6 +74,7 @@ Parse.Cloud.define('pushUserName', function (request, response) {
 
 
 Parse.Cloud.define('pushTo', function (request, response) {
+    Parse.Cloud.useMasterKey();
     var query = new Parse.Query(Parse.Installation);
     var usQuery = new Parse.Query("_User");
     usQuery.equalTo(request.params.where, request.params.value);
