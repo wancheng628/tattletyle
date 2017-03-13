@@ -97,7 +97,8 @@ Parse.Cloud.define('pushTo', function (request, response) {
 Parse.Cloud.beforeSave(Parse.Installation, function(request, response) {
   Parse.Cloud.useMasterKey();
   var androidId = request.object.get("androidId");
-  if (androidId == null || androidId == "") {
+  var gcmSenderId = request.object.get("GCMSenderId");  
+  if (androidId == null || androidId == "" || gcmSenderId != null) {
       console.warn("No androidId found, save and exit");
       response.success();
       return;
